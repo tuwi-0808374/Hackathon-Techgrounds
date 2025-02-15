@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
     console.log(`📩 Nouveau message reçu : "${text}" | De ${fromLang} vers ${toLang} | Salon: ${room}`);
 
     try {
-      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning: "${text}"`;
+      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning and only the translated text noting more: "${text}"`;
 
       // const response = await openaiClient.chat.completions.create({
       //   model: "gpt-3.5-turbo",
@@ -88,13 +88,28 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('requestDetectLanguage', async ({ text}) => {
+      console.log("requestDetectLanguage");
+      let  ask = "Can you detect what language this is? Return only codes like EN, ES, NL etc: " + text;
+      const response = await ollama.chat({
+        model: 'llama3.2',
+        messages: [{ role: 'user', content: ask }],
+      });
+
+      console.log(response)
+
+      const langCode = response.message.content.trim();;
+      socket.emit('receiveDetectLanguage', { text: langCode });
+  });
+
   // When user ask for a translation (Translator.jsx)
 
   socket.on('requestTranslation', async ({ text, fromLang, toLang }) => {
     console.log(`📩 Traduction demandée : "${text}" | De ${fromLang} vers ${toLang}`);
 
     try {
-      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning: "${text}"`;
+      //${fromLang}
+      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning and only the translated text noting more: "${text}"`;
 
       // const response = await openaiClient.chat.completions.create({
       //   model: "gpt-3.5-turbo",
@@ -102,7 +117,7 @@ io.on('connection', (socket) => {
       //   max_tokens: 100
       // });
 
-      console.log(4535)
+      console.log("requestTranslation")
 
       const response = await ollama.chat({
         model: 'llama3.2',
