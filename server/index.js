@@ -1,9 +1,9 @@
-require('dotenv').config();
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-const { OpenAI } = require('openai');
+// const { OpenAI } = require('openai');
+const { default: ollama } = require('ollama'); // CJS
 
 const app = express();
 const server = http.createServer(app);
@@ -16,18 +16,18 @@ const io = new Server(server, {
 
 // Loading API Key
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+// const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
-if (!OPENAI_API_KEY) {
-  console.error("❌ ERREUR : La clé API OpenAI est manquante ! Ajoutez-la dans un fichier .env");
-  process.exit(1);
-}
+// if (!OPENAI_API_KEY) {
+//   console.error("❌ ERREUR : La clé API OpenAI est manquante ! Ajoutez-la dans un fichier .env");
+//   process.exit(1);
+// }
 
 // Creating OpenAI Client
 
-const openaiClient = new OpenAI({
-  apiKey: OPENAI_API_KEY,
-});
+// const openaiClient = new OpenAI({
+//   apiKey: OPENAI_API_KEY,
+// });
 
 // Listing room w/ default room
 
@@ -55,13 +55,19 @@ io.on('connection', (socket) => {
     try {
       const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning: "${text}"`;
 
-      const response = await openaiClient.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 100
+      // const response = await openaiClient.chat.completions.create({
+      //   model: "gpt-3.5-turbo",
+      //   messages: [{ role: "user", content: prompt }],
+      //   max_tokens: 100
+      // });
+      
+      console.log(1111)
+      const response = await ollama.chat({
+        model: 'llama3.2',
+        messages: [{ role: 'user', content: prompt }],
       });
 
-      const translatedText = response.choices[0].message.content.trim();
+      const translatedText = response.message.content.trim();
       console.log(`📝 Traduction obtenue: "${translatedText}"`);
 
       const messageData = {
@@ -90,13 +96,22 @@ io.on('connection', (socket) => {
     try {
       const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning: "${text}"`;
 
-      const response = await openaiClient.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 100
+      // const response = await openaiClient.chat.completions.create({
+      //   model: "gpt-3.5-turbo",
+      //   messages: [{ role: "user", content: prompt }],
+      //   max_tokens: 100
+      // });
+
+      console.log(4535)
+
+      const response = await ollama.chat({
+        model: 'llama3.2',
+        messages: [{ role: 'user', content: prompt }],
       });
 
-      const translatedText = response.choices[0].message.content.trim();
+      console.log(response)
+
+      const translatedText = response.message.content.trim();
       console.log(`📝 Traduction obtenue: "${translatedText}"`);
 
       // Sending translation ONLY for the asking user (Translator.jsx)
