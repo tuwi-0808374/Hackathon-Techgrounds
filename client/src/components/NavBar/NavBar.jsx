@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './NavBar.css'
-import Logo from '../../img/langbridge-logo (2).png'
+import Logo from '../../img/LB (3).png'
 
 export default function NavBar ({ onSignInClick, onSignUpClick, isAuthenticated, username, profilePic }) {
   return (
