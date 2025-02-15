@@ -64,17 +64,17 @@ export default function Translator () {
     }
   }
 
-  // Adjusting height
+  // // Adjusting height
 
-  const adjustHeight = () => {
-    const textarea = textareaRef.current
-    textarea.style.height = 'auto'
-    textarea.style.height = `${textarea.scrollHeight}px`
-  }
+  // const adjustHeight = () => {
+  //   const textarea = textareaRef.current
+  //   textarea.style.height = 'auto'
+  //   textarea.style.height = `${textarea.scrollHeight}px`
+  // }
 
-  useEffect(() => {
-    adjustHeight()
-  }, [message])
+  // useEffect(() => {
+  //   adjustHeight()
+  // }, [message])
 
   const detect = () => {
     if (message.trim()) {
@@ -85,9 +85,10 @@ export default function Translator () {
 
   return (
     <div className="chat-container">
-      <h1 className='translatorTitle'>Translate your text!</h1>
+      <h1 className='translatorTitle'>Translate your text !</h1>
       <strong>Language detected: {langDetected}</strong>
       <br />
+      <div className='txtareaDiv'>
         <textarea
           ref={textareaRef}
           value={message}
@@ -97,7 +98,7 @@ export default function Translator () {
           }}
           onKeyDown={handleKeyDown}
           placeholder="Write your message..."
-        />
+        /></div>
       <div className="chat-box">
         {translatedMessage && (
           <div className="message">

@@ -9,7 +9,7 @@ export default function Modal ({ show, onClose, title, children }) {
     <div className="modal-overlay">
       <div className="modal-container">
         <h2 className="modal-title">{title}</h2>
-        <span className="close-button" onClick={onClose}>&times</span>
+        <span className="close-button" onClick={onClose}>X</span>
         <div className="modal-content">{children}</div>
       </div>
     </div>

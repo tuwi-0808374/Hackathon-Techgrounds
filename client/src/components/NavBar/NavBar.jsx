@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './NavBar.css'
-import Logo from '../../img/LB (3).png'
+import Logo from '../../img/Logo_final.png'
 
 export default function NavBar ({ onSignInClick, onSignUpClick, isAuthenticated, username, profilePic }) {
   return (

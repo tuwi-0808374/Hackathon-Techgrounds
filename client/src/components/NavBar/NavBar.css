@@ -5,7 +5,7 @@
     display: flex;
     position: absolute;
     flex-direction: row;
-    gap: 650px;
+    gap: 700px;
     align-items: center;
     width: 100%;
 }
@@ -28,7 +28,7 @@
     width: 100px;
     height: 90px;
     z-index: 2;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 .navbar-links {
