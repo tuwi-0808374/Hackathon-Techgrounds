@@ -53,8 +53,7 @@ io.on('connection', (socket) => {
     console.log(`📩 Nouveau message reçu : "${text}" | De ${fromLang} vers ${toLang} | Salon: ${room}`);
 
     try {
-      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning and only the translated text noting more: "${text}"`;
-
+      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, only give me the text: "${text}"`;
       // const response = await openaiClient.chat.completions.create({
       //   model: "gpt-3.5-turbo",
       //   messages: [{ role: "user", content: prompt }],
@@ -108,8 +107,7 @@ io.on('connection', (socket) => {
     console.log(`📩 Traduction demandée : "${text}" | De ${fromLang} vers ${toLang}`);
 
     try {
-      //${fromLang}
-      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, without changing its meaning and only the translated text noting more: "${text}"`;
+      const prompt = `Translate the following text from ${fromLang} to ${toLang} naturally, only give me the text: "${text}"`;
 
       // const response = await openaiClient.chat.completions.create({
       //   model: "gpt-3.5-turbo",
