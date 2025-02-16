@@ -107,12 +107,13 @@ export default function Translator () {
   return (
     <div className="chat-container">
       <h1 className='translatorTitle'>Translate your text !</h1>
-      <strong className='langDiv'>Language detected: {langDetected}
+      <strong className='langDiv'>Language detected: {langDetected} 
       {langDetected && checkImageExists(langDetected) && (
          <img
           src={checkImageExists(langDetected)}
-          width={20}
+          width={35}
           alt={`Flag of ${langDetected}`}
+          style={ {margin: '0 0 0 10px'} }
         />
       )}
       </strong>
