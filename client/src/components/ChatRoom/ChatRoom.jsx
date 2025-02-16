@@ -6,17 +6,18 @@ const socket = io("http://localhost:3001", {
   transports: ["websocket", "polling"],
 })
 
-export default function ChatRoom({ username, profilePic }) {
+export default function ChatRoom() {
+  const [username, setUsername] = useState(localStorage.getItem("username") || "Anonyme") // Adding username state
+  const [profilePic, setProfilePic] = useState(localStorage.getItem("profilePic") || "https://i.pravatar.cc/40") // Adding profilePic state
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState({})
-  const [selectedRoom, setSelectedRoom] = useState("general")
+  const [selectedRoom, setSelectedRoom] = useState(localStorage.getItem("selectedRoom") || "general")
   const [fromLang, setFromLang] = useState("fr")
   const [toLang, setToLang] = useState("en")
-  const [newRoomName, setNewRoomName] = useState("") // salon name
-  const [rooms, setRooms] = useState(["general", "tech", "gaming"]) // salons list
+  const [newRoomName, setNewRoomName] = useState("") // Room name
+  const [rooms, setRooms] = useState(["general", "tech", "gaming"]) // List of rooms
 
-  // Listenning new message
-
+  // Listening for new messages
   useEffect(() => {
     socket.on("receiveMessage", (data) => {
       setMessages((prevMessages) => ({
@@ -30,8 +31,7 @@ export default function ChatRoom({ username, profilePic }) {
     }
   }, [])
 
-  // Listenning salons update
-
+  // Listening for room updates
   useEffect(() => {
     socket.on("roomsList", (updatedRooms) => {
       setRooms(updatedRooms)
@@ -42,14 +42,44 @@ export default function ChatRoom({ username, profilePic }) {
     }
   }, [])
 
-  // Join a salon
-
+  // Joining a room
   useEffect(() => {
     socket.emit("joinRoom", selectedRoom)
   }, [selectedRoom])
 
-  // Send a message
+  // Creating a new room
+  const createNewRoom = () => {
+    const newRoom = newRoomName.trim() ? newRoomName : `new-room-${rooms.length + 1}`
+    if (!rooms.includes(newRoom)) {
+      setRooms([...rooms, newRoom])
+      setSelectedRoom(newRoom)
+      setNewRoomName("")
+      socket.emit("createRoom", newRoom)
+    }
+  }
 
+  // Deleting a room
+  const deleteRoom = (room) => {
+    if (room !== "general") {
+      setRooms(rooms.filter((r) => r !== room))
+      if (selectedRoom === room) {
+        setSelectedRoom("general") // Back to "general" room
+      }
+      socket.emit("deleteRoom", room) // Deleting room server-side
+    }
+  }
+
+  // Renaming a room
+  const renameRoom = (room) => {
+    const newRoomName = prompt("Enter a new name for this room:", room)
+    if (newRoomName && newRoomName !== room) {
+      setRooms(rooms.map((r) => (r === room ? newRoomName : r)))
+      setSelectedRoom(newRoomName)
+      socket.emit("renameRoom", { oldRoom: room, newRoom: newRoomName })
+    }
+  }
+
+  // Sending a message
   const sendMessage = () => {
     if (message.trim()) {
       const newMessage = {
@@ -62,51 +92,15 @@ export default function ChatRoom({ username, profilePic }) {
       }
 
       socket.emit("sendMessage", newMessage)
-      setMessage("") // Empty input after sending
+      setMessage("") // Clear input after sending
     }
   }
 
-  // Validate input with Enter key
-
+  // Handling Enter key press for sending message
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault()
       sendMessage()
-    }
-  }
-
-  // New salon with default name
-
-  const createNewRoom = () => {
-    const newRoom = newRoomName.trim() ? newRoomName : `new-room-${rooms.length + 1}`
-    if (!rooms.includes(newRoom)) {
-      setRooms([...rooms, newRoom])
-      setSelectedRoom(newRoom)
-      setNewRoomName("")
-      socket.emit("createRoom", newRoom)
-    }
-  }
-
-  // Delete room
-
-  const deleteRoom = (room) => {
-    if (room !== "general") {
-      setRooms(rooms.filter((r) => r !== room))
-      if (selectedRoom === room) {
-        setSelectedRoom("general") // Back to "general" room
-      }
-      socket.emit("deleteRoom", room) // Deleting room server side
-    }
-  }
-
-  // Rename a room
-
-  const renameRoom = (room) => {
-    const newRoomName = prompt("Entrez un nouveau nom pour ce salon :", room)
-    if (newRoomName && newRoomName !== room) {
-      setRooms(rooms.map((r) => (r === room ? newRoomName : r)))
-      setSelectedRoom(newRoomName)
-      socket.emit("renameRoom", { oldRoom: room, newRoom: newRoomName })
     }
   }
 
@@ -127,8 +121,8 @@ export default function ChatRoom({ username, profilePic }) {
                   : room}
                 {room !== "general" && (
                   <div className="room-actions">
-                    <button onClick={() => renameRoom(room)}>✏️ Rename</button>
-                    <button onClick={() => deleteRoom(room)}>🗑️ &nbsp; Delete</button>
+                    <button className="rename-btn" onClick={() => renameRoom(room)}>✏️</button>
+                    <button className="delete-btn" onClick={() => deleteRoom(room)}>🗑️</button>
                   </div>
                 )}
               </li>
@@ -166,7 +160,7 @@ export default function ChatRoom({ username, profilePic }) {
             <option value="en">🇬🇧 English</option>
             <option value="es">🇪🇸 Spanish</option>
             <option value="de">🇩🇪 German</option>
-            <option value="nl">nl Dutch</option>
+            <option value="nl">🇳🇱 Dutch</option>
           </select>
 
           <textarea
@@ -181,7 +175,7 @@ export default function ChatRoom({ username, profilePic }) {
             <option value="fr">🇫🇷 French</option>
             <option value="es">🇪🇸 Spanish</option>
             <option value="de">🇩🇪 German</option>
-            <option value="nl">nl Dutch</option>
+            <option value="nl">🇳🇱 Dutch</option>
           </select>
 
           <button onClick={sendMessage}>📤 Send</button>

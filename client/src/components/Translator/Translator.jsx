@@ -26,7 +26,7 @@ export default function Translator () {
     if (message.trim()) {
       setLoading(true)
       console.log(detectedLang)
-      socket.emit('requestTranslation', { text: message, detectedLang, toLang })
+      socket.emit('requestTranslation', { text: message, detectedLang: langDetected, toLang }) // using the actual state
     }
   }
 
@@ -53,6 +53,7 @@ export default function Translator () {
 
     return () => {
       socket.off('receiveTranslation', handleReceiveTranslation)
+      socket.off('receiveDetectLanguage', handleReceiveDetectLanguage) // Avoid memory bug
     }
   }, [])
 
@@ -95,7 +96,7 @@ export default function Translator () {
   return (
     <div className="chat-container">
       <h1 className='translatorTitle'>Translate your text !</h1>
-      <strong>Language detected: {langDetected}</strong>
+      <strong className='langDiv'>Language detected: {langDetected}</strong>
       <br />
       <div className='txtareaDiv'>
         <textarea
@@ -123,16 +124,21 @@ export default function Translator () {
         <option value="es">Español</option>
         <option value="de">Deutsch</option>
         <option value="it">Italiano</option>
-      </select>*/
+      </select> */}
 
-      <select value={toLang} onChange={(e) => setToLang(e.target.value)}>
-        <option value="nl">dutch</option>
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="es">Español</option>
-        <option value="de">Deutsch</option>
-        <option value="it">Italiano</option>
-      </select> }
+      <div className='selectDiv'>
+        
+        <strong>Output Language</strong>
+
+        <select value={toLang} onChange={(e) => setToLang(e.target.value)}>
+          
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="es">Español</option>
+          <option value="de">Deutsch</option>
+          <option value="it">Italiano</option>
+        </select>
+      </div>
 
       <button className='translateButton' onClick={sendMessage} disabled={loading}>
         Translate

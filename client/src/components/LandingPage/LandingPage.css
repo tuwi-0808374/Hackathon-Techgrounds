@@ -1,6 +1,6 @@
 .landing-page {
     text-align: center;
-    background: linear-gradient(135deg, #6b73ff, #000dff);
+    background: url("../../img/Copy of Untitled.png");
     color: white;
     min-height: 100vh;
     display: flex;
@@ -14,12 +14,17 @@
     font-size: 3rem;
     margin-bottom: 1rem;
     animation: fadeIn 1s ease-in-out;
+    color: black;
+    text-shadow: 2px 2px rgb(251, 199, 136);
 }
 
 .landing-page p {
     font-size: 1.5rem;
     color: #ddd;
     animation: fadeIn 1.5s ease-in-out;
+    color: black;
+    text-shadow: 2px 2px rgb(251, 199, 136);
+    font: 900;
 }
 
 @keyframes fadeIn {
@@ -32,4 +37,16 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.startBtn {
+    width: 200px;
+    padding: 1em;
+    background-color: bisque;
+    border: 2px solid black;
+}
+
+.startBtn:hover {
+    cursor: pointer;
+    background-color: rgb(251, 199, 136);
 }

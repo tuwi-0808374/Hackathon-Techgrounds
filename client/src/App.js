@@ -7,7 +7,8 @@ import Translator from "./components/Translator/Translator";
 import ChatRoom from "./components/ChatRoom/ChatRoom";
 import Modal from "./components/Modals/Modal";
 
-const App = () => {
+function App () {
+  
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,19 +41,29 @@ const App = () => {
   return (
     <Router>
       <NavBar
-        onSignInClick={handleShowSignIn}
-        onSignUpClick={handleShowSignUp}
         isAuthenticated={isAuthenticated}
         username={username}
         profilePic={preview}
       />
 
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/translator" element={<Translator username={username} profilePic={preview} />} />
+        <Route
+          path="/"
+          element={<LandingPage onSignInClick={handleShowSignIn} />}
+        />
+        <Route
+          path="/translator"
+          element={<Translator username={username} profilePic={preview} />}
+        />
         <Route
           path="/chatroom"
-          element={isAuthenticated ? <ChatRoom username={username} profilePic={preview} /> : <LandingPage />}
+          element={
+            isAuthenticated ? (
+              <ChatRoom username={username} profilePic={preview} />
+            ) : (
+              <LandingPage />
+            )
+          }
         />
       </Routes>
 
@@ -63,9 +74,57 @@ const App = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+        <input type="password" placeholder="Enter your password" />
         <input type="file" accept="image/*" onChange={handleProfilePicChange} />
-        {preview && <img src={preview} alt="Aperçu" className="profile-preview" />}
+        {preview && (
+          <img src={preview} alt="Aperçu" className="profile-preview" />
+        )}
         <button onClick={handleSignIn}>Connect</button>
+        <p>
+          Doesn't have an account yet ?{" "}
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleShowSignUp();
+            }}
+          >
+            Create one here
+          </a>
+        </p>
+      </Modal>
+      <Modal
+        show={showSignUp}
+        onClose={handleCloseSignUp}
+        title="Create an account"
+      >
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input type="email" placeholder="Enter your email" />
+        <input type="password" placeholder="Enter your password" />
+        <input type="password" placeholder="Confirm your password" />
+        <input type="file" accept="image/*" onChange={handleProfilePicChange} />
+        {preview && (
+          <img src={preview} alt="Aperçu" className="profile-preview" />
+        )}
+        <button onClick={() => console.log("User signed up!")}>Sign Up</button>
+        <p>
+          Already have an account?{" "}
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              handleShowSignIn();
+              handleCloseSignUp();
+            }}
+          >
+            Sign in here
+          </a>
+        </p>
       </Modal>
     </Router>
   );

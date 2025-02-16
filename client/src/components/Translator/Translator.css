@@ -19,10 +19,11 @@
     background: #fff;
     color: black;
     padding: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 1);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    margin-top: 110px;
 }
 
 .message {
@@ -46,12 +47,27 @@
 
 
 select {
-    width: 10%;
-    margin: 5px;
+    display: flex;
+    margin-left: 10px;
     padding: 10px;
     border-radius: 5px;
     border: none;
     font-size: 16px;
+    width: 140px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.7);
+}
+
+.selectDiv {
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    top: 23%;
+    left: 51%;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    font-size: 21px;
+    text-shadow: 2px 2px black;
 }
 
 button {
@@ -65,12 +81,13 @@ button {
 
 textarea {
     width: 300px;
-    height: 350px;
+    height: 360px;
     margin: 5px;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     border: none;
     font-size: 16px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 1);
 }
 
 .translateButton {
@@ -82,7 +99,7 @@ textarea {
     bottom: 3%;
 }
 
-button:hover {
+.translateButton:hover {
     background-color: #4facfe;
 }
 
@@ -109,4 +126,14 @@ button:hover {
 .txtareaDiv {
     width: 350px;
     height: 400px;
+    margin-top: 120px;
+}
+
+.langDiv {
+    position: absolute;
+    display: flex;
+    top: 25%;
+    left: 28%;
+    font-size: 21px;
+    text-shadow: 2px 2px black;
 }

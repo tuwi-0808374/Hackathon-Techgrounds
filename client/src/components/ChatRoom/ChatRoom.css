@@ -1,182 +1,205 @@
 .chatroom-container {
-    display: flex;
-    height: calc(100vh - 85px);
-    font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
 /* Barre latérale */
 
 .chatroom-sidebar {
-    width: 250px;
-    background-color: #2f3136;
-    color: white;
-    padding: 20px;
+  width: 250px;
+  background-color: #2f3136;
+  color: white;
+  padding: 20px;
 }
 
 .chatroom-sidebar h2 {
-    margin-bottom: 10px;
+  margin-top: 100px;
 }
 
 .chatroom-sidebar ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .chatroom-sidebar li {
-    padding: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
+  padding: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
 .chatroom-sidebar li:hover {
-    background-color: #40444b;
+  background-color: #40444b;
 }
 
 /* Fenêtre de chat */
 
 .chatroom-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #36393f;
-    color: white;
-    padding-bottom: 100px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #36393f;
+  color: white;
+  padding-bottom: 100px;
 }
 
 .saloonTitle {
-    padding: 20px;
+  padding: 20px;
 }
 
 .chatroom-messages {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    overflow-y: auto;
-    max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  overflow-y: auto;
+  max-height: 400px;
 }
 
 .message-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
 .username {
-    font-weight: bold;
-    margin-left: 10px;
-    color: #ffffff;
+  font-weight: bold;
+  margin-left: 10px;
+  color: #ffffff;
 }
 
 .chat-message {
-    display: flex;
-    align-items: center;
-    max-width: 70%;
-    padding: 10px;
-    border-radius: 18px;
-    font-size: 14px;
-    line-height: 1.4;
-    word-wrap: break-word;
-    position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  position: relative;
 }
 
 .chat-message .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
 }
 
 .chat-message p {
-    margin: 0;
-    padding: 8px 12px;
-    border-radius: 18px;
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 18px;
 }
 
 .chat-message.sent {
-    align-self: flex-end;
-    background-color: #0078ff;
-    color: white;
-    border-bottom-right-radius: 5px;
+  align-self: flex-end;
+  background-color: #0078ff;
+  color: white;
+  border-bottom-right-radius: 5px;
 }
 
 .chat-message.received {
-    align-self: flex-start;
-    background-color: #f1f0f0;
-    color: black;
-    border-bottom-left-radius: 5px;
+  align-self: flex-start;
+  background-color: #f1f0f0;
+  color: black;
+  border-bottom-left-radius: 5px;
 }
 
 /* Zone de saisie */
 
 .chatroom-input {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
-    background-color: #222;
-    border-top: 1px solid #444;
-    position: fixed;
-    bottom: 10px;
-    width: calc(100% - 300px);
-    bottom: 0;
-
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #222;
+  border-top: 1px solid #444;
+  position: fixed;
+  bottom: 10px;
+  width: calc(100% - 300px);
+  bottom: 0;
 }
 
 .chatroom-input textarea {
-    flex-grow: 1;
-    padding: 8px;
-    border-radius: 5px;
-    border: none;
-    height: 25px;
+  flex-grow: 1;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  height: 25px;
 }
 
 .chatroom-input button {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .chatroom-input button:hover {
-    background-color: #5b6eae;
+  background-color: #5b6eae;
 }
 
 .room-actions {
-    padding-top: 10px;
+  padding-top: 10px;
 }
 
 .room-actions button {
-    width: 100px;
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0.6;
+}
+
+.rename-btn:hover {
+  color: #4caf50;
+}
+
+.delete-btn:hover {
+  color: #f44336;
+}
+
+.room-actions button:hover {
+  opacity: 1;
+  transform: scale(1.2);
 }
 
 .create-room {
-    display: flex;
-    position: absolute;
-    top: 12%;
-    left: 11%;
+  display: flex;
+  position: absolute;
+  top: 12%;
+  left: 11%;
 }
 
 .newRoom {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #666a75;
-    color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #666a75;
+  color: white;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
 }
 
 .newRoom:hover {
-    cursor: pointer;
+  cursor: pointer;
+  background-color: #9aa0b0;
 }
 
 .selectBtn {
-    width: 12%;
-    margin: 5px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
+  width: 12%;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
 }
