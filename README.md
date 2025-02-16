@@ -1,6 +1,6 @@
 # Hackathon Techgrounds
 
-## Descrition
+## Description
 LangBridge is an app designed to facilitate collaboration between people who speak different languages. Users can communicate in their native language while the app translates their messages in real time for others. This helps eliminate language barriers in diverse teams.
 
 The project utilized local AI models instead of online services, with Ollama running on a laptop for greater control and privacy. This approach required extra setup time but provided deeper insights into AI implementation.
