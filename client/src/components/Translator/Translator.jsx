@@ -93,10 +93,29 @@ export default function Translator () {
     }
   }
 
+  const checkImageExists = (lang) => {
+    try {
+      let url = require(`../../img/svg/${lang.toLowerCase()}.svg`);
+      console.log('Image URL:', url);
+      return url;
+    } catch (err) {
+      console.error('Image not found:', err);
+      return null;
+    }
+  };
+
   return (
     <div className="chat-container">
       <h1 className='translatorTitle'>Translate your text !</h1>
-      <strong className='langDiv'>Language detected: {langDetected}</strong>
+      <strong className='langDiv'>Language detected: {langDetected}
+      {langDetected && checkImageExists(langDetected) && (
+         <img
+          src={checkImageExists(langDetected)}
+          width={20}
+          alt={`Flag of ${langDetected}`}
+        />
+      )}
+      </strong>
       <br />
       <div className='txtareaDiv'>
         <textarea
